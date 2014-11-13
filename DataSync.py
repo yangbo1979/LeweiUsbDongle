@@ -14,7 +14,7 @@ sn = ''
 #change here
 gatewayNo = '01'
 #change here
-userKey = '69ea2c4caa984436bdf42afb9ef6e79b'
+userKey = 'not_fill_your_apikey_here,will_read_from_config_file'
 enableSn = '0'
 
 def hexShow(argv):  
@@ -62,7 +62,7 @@ def PostData(url,usrkey,data):
     http=httplib2.Http()
     headers={"userkey":usrkey}
     resp,content=http.request(url,'POST',headers=headers,body=data)
-
+    return (resp,content)
 
         
 def errDetect():
