@@ -11,7 +11,7 @@ def GetData(url,data):
     resp,content=http.request(url,'GET',headers=headers,body=data)
     return (resp,content)
 
-time.sleep(10)
+time.sleep(5)
 
 cf = ConfigParser.ConfigParser()
 

@@ -111,34 +111,34 @@ try:
     rdir = "/dev/"
     for parent, dirnames, filenames in os.walk(rdir):
         for fn in filenames:
-            try:
-                fn.index("USB")
+            if(fn.find("USB")>0):
                 print "Communicating with:"+fn
                 instrument = minimalmodbus.Instrument('/dev/'+fn, 1)
                 # port name, slave address
                 # use '/dev/ttyUSB0' in linux and number-1 in windows system,here is 36
 
-
-                deviceType = instrument.read_string(80,1)
-                hexShow(deviceType)
-
-                usbDongle = usbdongle.LeweiUsbDongle(deviceType)
+                try:
+                    deviceType = instrument.read_string(80,1)
+                    hexShow(deviceType)
+                    usbDongle = usbdongle.LeweiUsbDongle(deviceType)
 
                     
-                ## Read temperature (PV = ProcessValue)
-                ## \x9001 is 36865
-                dgData = instrument.read_string(hexToOct(usbDongle.dongleType),usbDongle.dongleDataLength)
-                # Registernumber, number of decimalsprint temperature
+                    ## Read temperature (PV = ProcessValue)
+                    ## \x9001 is 36865
+                    dgData = instrument.read_string(hexToOct(usbDongle.dongleType),usbDongle.dongleDataLength)
+                    # Registernumber, number of decimalsprint temperature
 
-                hexShow(dgData)
-                    
-                userData = usbDongle.handleData(dgData)
-                res=PostData(apiUrl,userKey,userData)
-            except:
-                pass
+                    hexShow(dgData)
+                        
+                    userData = usbDongle.handleData(dgData)
+                    res=PostData(apiUrl,userKey,userData)
+                except ValueError,e:
+                    print Exception,":",e
+                    pass
 
-
-except:
+                
+except Exception,e:   
+    print Exception,":",e   
     print "found error"
     errDetect()
     pass
