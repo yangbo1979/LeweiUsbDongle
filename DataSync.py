@@ -102,9 +102,9 @@ except:
 select api address
 '''
 if(enableSn == '0'):
-    apiUrl="http://www.lewei50.com/api/v1/gateway/updatesensors/"+gatewayNo
+    apiUrl="http://open.lewei50.com/api/v1/gateway/updatesensors/"+gatewayNo
 else:
-    apiUrl="http://www.lewei50.com/api/v1/gateway/updatesensorsbysn/"+sn
+    apiUrl="http://open.lewei50.com/api/v1/gateway/updatesensorsbysn/"+sn
 
 
 try:
@@ -131,7 +131,11 @@ try:
                     hexShow(dgData)
                         
                     userData = usbDongle.handleData(dgData)
-                    res=PostData(apiUrl,userKey,userData)
+                    try:
+                        res=PostData(apiUrl,userKey,userData)
+                    except:
+                        print "send fail,check your network"
+                        pass
                 except ValueError,e:
                     print Exception,":",e
                     pass
