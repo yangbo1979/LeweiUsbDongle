@@ -133,6 +133,7 @@ try:
                     userData = usbDongle.handleData(dgData)
                     try:
                         res=PostData(apiUrl,userKey,userData)
+                        time.sleep(10)
                     except:
                         print "send fail,check your network"
                         pass
