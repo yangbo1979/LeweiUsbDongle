@@ -74,7 +74,7 @@ class LeweiUsbDongle(object):
             dustDensity = vOut * K
         dustDensity = int(dustDensity)
         #print "dustDensity:"+str(dustDensity)
-        pressureVal = (ord(framedata[6])*256+ord(framedata[7]))*0.01
+        pressureVal = (ord(framedata[6])*256+ord(framedata[7]))*0.1
         #print pressureVal
 
         #define 'temperature,humidity' as name in Lewei50.com.
