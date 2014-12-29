@@ -68,10 +68,9 @@ class LeweiUsbDongle(object):
         dustDensity = 0.56 * 1000
         if(vOut > 3.25):
             dustDensity = 0.56* 1000
-            exit()
+            dustDensity = 0
         elif(vOut < 0):
             dustDensity = 0
-            exit()
         else :
             dustDensity = vOut * K
         dustDensity = int(dustDensity)
