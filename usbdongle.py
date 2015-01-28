@@ -39,6 +39,8 @@ class LeweiUsbDongle(object):
         humidityVal = (ord(framedata[0])*256+ord(framedata[1]))*0.1
         #print humidityVal
         temperatureVal = (ord(framedata[2])*256+ord(framedata[3]))*0.1
+        if(temperatureVal >= 3276.8):
+            temperatureVal = (temperatureVal -3276.8)*(-1)
         #print temperatureVal
 
         #define 'temperature,humidity' as name in Lewei50.com
@@ -61,7 +63,7 @@ class LeweiUsbDongle(object):
         #print humidityVal
         temperatureVal = (ord(framedata[2])*256+ord(framedata[3]))*0.1
         if(temperatureVal >= 3276.8):
-            temperatureVal = temperatureVal -6553.6
+            temperatureVal = (temperatureVal -3276.8)*(-1)
         #print temperatureVal
         vOut = (ord(framedata[4])*256+ord(framedata[5]))/1024*5
         K = 0.17*1000
