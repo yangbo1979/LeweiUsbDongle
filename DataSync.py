@@ -80,9 +80,11 @@ def errDetect():
         errLog = open('/lewei50/error.txt','w')
         if(int(errTimes) > 20) :
             errLog.write('0')
-            time.sleep(5)
+            errLog.close()
+            time.sleep(10)
             os.system('reboot')
-        errLog.write(str(int(errTimes)+1))
+        else :
+            errLog.write(str(int(errTimes)+1))
     except Exception,e:
         print e
     finally:
@@ -139,6 +141,16 @@ try:
                         pass
                 except ValueError,e:
                     print Exception,":",e
+                    usbDongle = usbdongle.LeweiUsbDongle("UNKNOWN")
+                    result = usbDongle.detectType(fn)
+                    if(result):
+                        try:
+                            res=PostData(apiUrl,userKey,result)
+                            time.sleep(10)
+                        except:
+                            print "send fail,check your network"
+                            pass
+                    
                     pass
 
                 

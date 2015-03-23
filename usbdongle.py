@@ -1,5 +1,8 @@
 from __future__ import division
 import json
+import re
+import time
+import serial
 
 class LeweiUsbDongle(object):
 
@@ -103,6 +106,52 @@ class LeweiUsbDongle(object):
             #res=PostData(apiUrl,userKey,usrData)
             #return ""
         return userData
+
+    def detectFrame(self,data):
+        #print data
+        result = False
+        for line in data.splitlines():
+            #print line
+            pattern = re.compile(r't1=\+?\-?\d\d\.\d\d')
+            match = pattern.match(line)
+            if match:
+                result = match.group()[-6:]
+                print "found type 18B20 "+result
+                lst_data=[]
+                sensor1={"Name":"temperature","Value":str(result)}
+                lst_data.append(sensor1)
+                userData=json.dumps(lst_data)
+                print userData
+                return userData
+            pass
+        return result
+
+    def detectType(self,devName):
+        print "detecting Type"
+        self.dongleName = "UNKNOWN"
+        ser=None
+        serial_port="/dev/"+devName
+        serial_timeout=1
+        time.sleep(1)
+        try :
+            if ser is None:
+                ser=serial.Serial(port=serial_port, baudrate=9600, bytesize=8, parity="N", stopbits=1, xonxoff=0)
+                ser.setTimeout(serial_timeout)
+            n = ser.inWaiting()
+            #recive the response from device
+            recv=""
+            if n:
+                print ('data recieved')
+                recv=ser.read(n)
+                resultData = self.detectFrame(recv)
+                return resultData
+            else :
+                #print ('no data recieved')
+                ser=None
+        except Exception,e:
+            print e
+            pass
+        return False
             
     def handleData(self,framedata):
         data = ""
