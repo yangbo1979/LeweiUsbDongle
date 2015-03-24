@@ -141,8 +141,13 @@ try:
                         pass
                 except ValueError,e:
                     print Exception,":",e
-                    usbDongle = usbdongle.LeweiUsbDongle("UNKNOWN")
-                    result = usbDongle.detectType(fn)
+                    try :
+                        usbDongle = usbdongle.LeweiUsbDongle("UNKNOWN")
+                        result = usbDongle.detectType(fn)
+                    except:   
+                        print "found error"
+                        errDetect()
+                        pass
                     if(result):
                         try:
                             res=PostData(apiUrl,userKey,result)
@@ -155,7 +160,5 @@ try:
 
                 
 except Exception,e:   
-    print Exception,":",e   
-    print "found error"
-    errDetect()
+    print Exception,":",e
     pass
