@@ -117,6 +117,7 @@ class LeweiUsbDongle(object):
             if match:
                 result = match.group()[-6:]
                 print "found type 18B20 "+result
+                self.dongleName = "18B20"
                 lst_data=[]
                 sensor1={"Name":"temperature","Value":str(result)}
                 lst_data.append(sensor1)
@@ -124,6 +125,20 @@ class LeweiUsbDongle(object):
                 print userData
                 return userData
             pass
+        for line in data.splitlines():
+            linetest = "asf_asdfw asdf\x00"
+            pattern = re.compile(r'(.*)\x00')
+            match = pattern.match(linetest)
+            if match:
+                result = match.group()
+                print "found type MCLoger "+result
+                self.dongleName = "MCLoger"
+                sensor1={"Message":str(result)}
+                userData=json.dumps(sensor1)
+                print userData
+                return userData
+            pass
+            
         return result
 
     def detectType(self,devName):

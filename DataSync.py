@@ -103,10 +103,17 @@ except:
 '''
 select api address
 '''
+
 if(enableSn == '0'):
-    apiUrl="http://open.lewei50.com/api/v1/gateway/updatesensors/"+gatewayNo
+    apiUrlUploadData="http://open.lewei50.com/api/v1/gateway/updatesensors/"+gatewayNo
+    apiUrlUploadLog = "http://www.lewei50.com/api/V1/gateway/updatelog/"+gatewayNo
 else:
-    apiUrl="http://open.lewei50.com/api/v1/gateway/updatesensorsbysn/"+sn
+    apiUrlUploadData="http://open.lewei50.com/api/v1/gateway/updatesensorsbysn/"+sn
+    apiUrlUploadLog = "http://www.lewei50.com/api/V1/gateway/updatelogbysn/"+sn
+'''
+set default api
+'''
+apiUrl = apiUrlUploadData
 
 
 try:
@@ -149,6 +156,11 @@ try:
                         errDetect()
                         pass
                     if(result):
+                        print "detected:"+usbDongle.dongleName
+                        if (usbDongle.dongleName == "MCLoger"):
+                            apiUrl = apiUrlUploadLog
+                        else :
+                            apiUrl = apiUrlUploadData
                         try:
                             res=PostData(apiUrl,userKey,result)
                             time.sleep(10)
