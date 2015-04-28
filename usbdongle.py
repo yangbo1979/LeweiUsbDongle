@@ -126,9 +126,8 @@ class LeweiUsbDongle(object):
                 return userData
             pass
         for line in data.splitlines():
-            linetest = "asf_asdfw asdf\x00"
             pattern = re.compile(r'(.*)\x00')
-            match = pattern.match(linetest)
+            match = pattern.match(line)
             if match:
                 result = match.group()
                 print "found type MCLoger "+result
