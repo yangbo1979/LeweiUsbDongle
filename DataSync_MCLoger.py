@@ -211,7 +211,7 @@ def run(svr_status):
     ser=None
     serial_port="/dev/ttyUSB0"
     #serial_port=24
-    serial_timeout=1
+    serial_timeout=3
     #cmds="\xf0\x80\x80"
 
 
@@ -229,7 +229,7 @@ def run(svr_status):
             #ser.write(cmds)
             #read the frame which is sended by self
             #ser.read(len(cmds))
-            time.sleep(0.8) 
+            time.sleep(3) 
             n = ser.inWaiting()
             #recive the response from device
             recv=""
