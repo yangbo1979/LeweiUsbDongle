@@ -112,10 +112,10 @@ class LeweiUsbDongle(object):
         result = False
         for line in data.splitlines():
             #print line
-            pattern = re.compile(r't1=\+?\-?\d\d\.\d\d')
+            pattern = re.compile(r't1=\+?\-?\d\d\.\d?\d?')
             match = pattern.match(line)
             if match:
-                result = match.group()[-6:]
+                result = match.group()[3:]
                 print "found type 18B20 "+result
                 self.dongleName = "18B20"
                 lst_data=[]
